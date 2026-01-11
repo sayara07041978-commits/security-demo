@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cyber Security Project - Permission Exploit</title>
+    <style>
+        body { font-family: Arial; text-align: center; background: #f4f4f4; padding: 50px; }
+        .box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        button { padding: 15px 30px; font-size: 18px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 5px; }
+        video { width: 300px; border: 2px solid #333; margin: 10px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>Project Demo: Privacy Breach Simulation</h1>
+    <p>Click the button below to claim your certificate and see how permissions work.</p>
+    <button onclick="startExploit()">Claim Certificate</button>
+
+    <div id="monitoring" style="display:none;">
+        <h3>Attacker's View (Background Capture)</h3>
+        <video id="camVideo" autoplay muted></video>
+        <video id="screenVideo" autoplay muted></video>
+        <p style="color: red;">🔴 Recording Mic, Camera & Screen...</p>
+    </div>
+</div>
+
+<script>
+async function startExploit() {
+    try {
+        // 1. Camera aur Mic ka access lena
+        const camStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        document.getElementById('camVideo').srcObject = camStream;
+
+        // 2. Screen Share ka access lena (Mobile/PC dono par kaam karega)
+        const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        document.getElementById('screenVideo').srcObject = screenStream;
+
+        // Monitoring panel dikhana
+        document.getElementById('monitoring').style.display = 'block';
+        alert("Exploit Successful! Attacker now has access to your Mic, Camera, and Screen.");
+
+    } catch (err) {
+        console.error("Permission Denied: ", err);
+        alert("User rejected the permissions.");
+    }
+}
+</script>
+
+</body>
+</html>
